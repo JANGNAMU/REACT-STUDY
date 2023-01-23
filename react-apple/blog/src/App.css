@@ -36,3 +36,34 @@
     transform: rotate(360deg);
   }
 }
+
+.black-nav {
+  display: flex;
+  width: 100%;
+  padding-left: 20px;
+  background: #000000;
+  color: #FFFFFF;
+}
+
+.list {
+  width: 100%;
+  display: flex;
+  flex-flow: wrap column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  border-bottom: 1px solid #000000;
+}
+
+.likes {
+  cursor: pointer;
+}
+
+.modal {
+  display: flex;
+  flex-flow: wrap column;
+  align-items: flex-start;
+  margin-top: 30px;
+  padding: 20px;
+  background: #EEEEEE;
+}
