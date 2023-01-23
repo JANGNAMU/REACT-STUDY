@@ -9,33 +9,49 @@ function App() {
   */
 
   /* 포스트 제목 */
-  const [postLists, setPostLists] = useState( ['용산구 맛집', '삼각지 맛집', '신사동 맛집'] )
+  const [postLists, setPostLists] = useState(['용산구 맛집', '삼각지 맛집', '신사동 맛집'])
   /* 포스트 날짜 */
   const [postDates, setPostDates] = useState(['23.01.19', '23.01.20', '23.01.21'])
   /* 좋아요 */
-  const [likes, addLikes] = useState([0, 0, 0]);
+  const [posrLikes, setPostLikes] = useState([0, 0, 0]);
 
   /* 포스트 내용 배열 */
   const [postInfo, setPostInfo] = useState([
     { 
+      id : 0,
       title : '용산구 당신만 모르는 맛집',
       date : '23.01.19',
-      likes : 0
+      like : 0
     },
     { 
+      id : 1,
       title : '삼각지 핫플레이스',
       date : '23.01.19',
-      likes : 0
+      like : 0
     },
     { 
+      id : 2,
       title : '영등포 쇼핑하기 좋은 곳',
       date : '23.01.19',
-      likes : 0
+      like : 0
     },
-  ])  
+  ]);
 
   /* 모달 상태 관리 */
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false)
+
+  /* 좋아요 관리 함수 */
+  const handleLikes = idx => {
+    const prev = [...postInfo];
+    prev.map( prevInfo => {
+      if(prevInfo.id === idx){
+        prevInfo.like += 1
+      }
+    })
+    
+    setPostInfo(prev)
+  }
+
 
   return (
     <div className="App">
@@ -44,34 +60,22 @@ function App() {
       </div>
       {
         [...postInfo].map( (post, idx) => {
+          console.info('post : ', post)
           return (
             <div className='list' key={`list${idx}`}>
-            <h4
-                onClick={ e => {
-                  console.info('e : ', e)
-                    e.preventDefault();
-                    showModal ? setShowModal(false) : setShowModal(true)
-                  }  
-                }> 
+              <h4 onClick={ e => { 
+                e.preventDefault();
+                showModal ? setShowModal(false) : setShowModal(true) 
+              }}> 
                 { post.title }
                 <span 
                   className='likes'
                   onClick={ e => {
-                    console.info('idx : ', idx, postInfo[idx], setPostInfo)
-                    switch(idx){
-                      case 0 : 
-                        setPostInfo(postInfo[idx].likes = [ postInfo[idx].likes[0] + 1 , postInfo[idx].likes[1], postInfo[idx].likes[2]] )
-                        break;
-                      case 1 : 
-                        setPostInfo(postInfo[idx].likes = [ postInfo[idx].likes[0] , postInfo[idx].likes[1]+ 1, postInfo[idx].likes[2]] )
-                        break;
-                      case 2 : 
-                        setPostInfo(postInfo[idx].likes = [ postInfo[idx].likes[0], postInfo[idx].likes[1], postInfo[idx].likes[2]+ 1] )
-                        break;
-                    }
-                    
+                    e.preventDefault();
+                    handleLikes(idx)
                   }}
-                > ❤️‍🔥 {post.likes}</span>
+                > ❤️‍🔥 {post.like}
+                </span>
               </h4>
               <p>{post.date}</p>
           </div>
@@ -80,10 +84,10 @@ function App() {
       }
 
       { showModal ? 
-        <Modal
-          postInfo = {postInfo}
+        <Modal 
+          postInfos = {postInfo}
         /> 
-        : null  
+        : null 
       }
 
     </div>
@@ -94,18 +98,13 @@ function App() {
  * 모달의 나타내기 위한 선언
  */
 const Modal = props => {
-  console.info('props : ', props.postInfo[0].title)
+  console.info('props : ', props)
   return(
     <div className='modal' id='modal'>
-      <h4>{props.postInfo[0].title}</h4>
-      <p>{props.postInfo[0].date}</p>
+      <h4>포스트 제목</h4>
+      <p>포스트 날짜</p>
       <p>상세내용</p>
-      <button 
-        type='button'
-        // onClick={ e => { 
-        //   props.changePostName(props.postName = ['여자코트추천', '삼각지 맛집', '서초구 맛집']) 
-        // }}
-      >글수정</button>
+      <button type='button'>글수정</button>
     </div>
   )
 }
