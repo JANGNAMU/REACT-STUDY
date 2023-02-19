@@ -17,10 +17,10 @@ function App() {
   } 
   */
   const counterProps = {
-    initialValue : 5,
+    // initialValue : 5,
     a : 1,
     b : 2,
-    c : 3
+    c : 3,
   }
 
   return (
