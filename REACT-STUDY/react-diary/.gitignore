@@ -21,3 +21,6 @@ dist/
 
 # log
 *.log*
+
+#etc
+.eslintcache
