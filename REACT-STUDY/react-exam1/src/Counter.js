@@ -1,9 +1,10 @@
 /* +/- 에 따라 값 변환을 주는 컴포넌트 */
 import { useState } from "react";
+import OddEvenResult from "./OddEvenResult";
 
 const Counter = ({initialValue}) => {
     // 비구조화를 통해 spread 된 친구 중 받아오고 싶은 키값만 입력
-    console.info(`props : `, initialValue)
+    // console.info(`props : `, initialValue)
 
     // 값의 상태를 관리할 state
     // [상태값, 상태변환함수]
@@ -20,6 +21,7 @@ const Counter = ({initialValue}) => {
             <h4>{count}</h4>
             <button onClick={onIncrease}>+</button>
             <button onClick={onDecrease}>-</button>
+            <OddEvenResult count={count} />
         </>
     )
 }

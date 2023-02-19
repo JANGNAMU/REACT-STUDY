@@ -1,0 +1,23 @@
+# dependencies
+node_modules/
+yarn.lock
+yarn-error.log
+package-lock.json
+
+# os
+.DS_Store
+
+# production
+dist/
+
+# env
+.env
+.env.dev
+.env.local
+.env.test
+
+# testing
+/coverage
+
+# log
+*.log*

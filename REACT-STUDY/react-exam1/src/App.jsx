@@ -2,6 +2,7 @@ import './App.css';
 import MyHeader from './MyHeader';
 import MyFooter from './MyFooter';
 import Counter from './Counter';
+import Container from './Container';
 
 function App() {
   /*
@@ -24,10 +25,12 @@ function App() {
   }
 
   return (
-    <div>
-      <MyHeader />
-      <Counter {...counterProps} />
-    </div>
+    <Container >
+      <div>
+        <MyHeader />
+        <Counter {...counterProps} />
+      </div>
+    </Container>
   );
 }
 
