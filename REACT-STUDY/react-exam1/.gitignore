@@ -1,20 +1,32 @@
 # Created by https://www.toptal.com/developers/gitignore/api/react
 # Edit at https://www.toptal.com/developers/gitignore?templates=react
 
-### react ###
-.DS_*
-*.log
-logs
-**/*.backup.*
-**/*.back.*
-
+# dependencies
 node_modules/
-bower_components
+yarn.lock
+yarn-error.log
+package-lock.json
 
-*.sublime*
+# os
+.DS_Store
 
-psd
-thumb
-sketch
+# production
+dist/
+
+# env
+.env
+.env.dev
+.env.local
+.env.test
+
+# testing
+/coverage
+
+# log
+*.log*
+
+# pack
+.pack
+.eslintcache
 
 # End of https://www.toptal.com/developers/gitignore/api/react
