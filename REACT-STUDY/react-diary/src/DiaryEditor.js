@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
-
+/** 다이어리 작성을 위한 컴포넌트
+ * 
+ */
 const DiaryEditor = () =>{
     /* 다이어리의 내용을 관리하기 위한 state */
     const [diaryState, setDiaryState] = useState({
