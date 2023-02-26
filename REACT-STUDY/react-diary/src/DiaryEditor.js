@@ -1,14 +1,20 @@
 import { useRef, useState } from "react";
-/** 다이어리 작성을 위한 컴포넌트
- * 
+/** 
+ * 다이어리 작성을 위한 컴포넌트 
+ * @param   onSubmit    작성자, 내용, 행복점수를 입력받아 새로 등록하는 prop
  */
-const DiaryEditor = () =>{
+const DiaryEditor = ({onSubmit}) =>{
     /* 다이어리의 내용을 관리하기 위한 state */
     const [diaryState, setDiaryState] = useState({
         author : "",
         content : "",
-        happy : 1
+        happy : 3
     })
+
+    // state 초기화를 위한 함수
+    const initState = () => {
+        setDiaryState({author:"", content:"", happy:""})
+    }
 
     /* DOM 요소를 직접 컨트롤하기 위한 ref */
     const authorInput = useRef()
@@ -25,15 +31,16 @@ const DiaryEditor = () =>{
     /* submit을 위한 함수 */
     const handleSubmit = e => {
         if(diaryState.author.length < 1){
-            // alert('작성자는 1글자 이상 입력해주세요')
             authorInput.current.focus()
             return;
         }
-        if(diaryState.content.length < 1){
-            // alert('일기 내용은 5글자 이상 입력해주세요')
+        if(diaryState.content.length < 5){
             contentInput.current.focus()
             return;
         }
+        // prop으로 전달 받은 useState 해주는 함수에 state 전달
+        onSubmit( diaryState.author, diaryState.content, diaryState.happy )
+        initState()
         alert('저장되었습니다!')
     }
 

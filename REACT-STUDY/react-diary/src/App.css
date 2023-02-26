@@ -1,9 +1,7 @@
 /* App */
-.App {
-}
+/* .App {} */
 
 /* editor */
-
 .DiaryEditor {
   border: 1px solid gray;
   text-align: center;
@@ -22,6 +20,7 @@ textarea {
 .DiaryEditor textarea {
   padding: 10px;
   height: 150px;
+  resize: none;
 }
 
 .DiaryEditor select {

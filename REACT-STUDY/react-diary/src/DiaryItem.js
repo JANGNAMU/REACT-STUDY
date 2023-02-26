@@ -1,9 +1,7 @@
-/* 다이어리 리스트의 요소 수만큼 반복하며 그릴 아이템 */
-const DiaryItem = ({ id, author, content, happy, createDate }) =>{
-
-    const happyPoint = [
-        '🥲', '😐', '😌', '😊', '🥰'
-    ]
+/* 다이어리 리스트 아이템 */
+const DiaryItem = ({ onRemove, id, author, content, happy, submitDate }) =>{
+    // 행복점수 정도에 따른 표현
+    const happyPoint = ['🥲', '😐', '😌', '😊', '🥰']
 
     return (
         <div className="DiaryItem">
@@ -12,9 +10,14 @@ const DiaryItem = ({ id, author, content, happy, createDate }) =>{
             </span>
             <br />
             <span className="date">
-                {new Date(createDate).toDateString()}
+                {new Date(submitDate).toDateString()}
             </span>
             <div className="content">{content}</div>
+            <button onClick={ () => {
+                if(window.confirm(`${id+1}번째 일기를 정말 삭제하시겠습니까?`)){
+                    onRemove(id)
+                }
+            }}>삭제하기</button>
         </div>
     )
 }
