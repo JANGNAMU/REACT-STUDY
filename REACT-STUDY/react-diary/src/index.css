@@ -12,6 +12,7 @@ code {
     monospace;
 }
 
+textarea { resize: none; }
 input:focus, textarea:focus, select:focus {
   border: 2px solid #ff0000 !important;
 }

@@ -20,7 +20,6 @@ textarea {
 .DiaryEditor textarea {
   padding: 10px;
   height: 150px;
-  resize: none;
 }
 
 .DiaryEditor select {

@@ -63,12 +63,30 @@ function App() {
     console.info(`${targetId+1} 번째 일기가 삭제되었습니다`)
   }
 
+  // 일기를 수정하기 위한 함수
+  const onEdit = (targetId, editContent) => {
+    /**
+     * 왜 DiaryItem에 정의하지 않고 여기에 선언하는 지?
+     * react의 특성 : 
+     * 데이터는 부모 -> 자식으로
+     * 이벤트는 자식 -> 부모로 이동하기 때문에
+     * 데이터를 가지고 내려갈 수 있도록 부모에 선언
+     */
+    setDiaries( 
+      diaries.map( diary => 
+        diary.id === targetId ? 
+          {...diary, content: editContent} : diary
+      )
+    )
+  }
+
   return (
     <div className='App'>
       <DiaryEditor onSubmit={onSubmit} />
       <DiaryList 
         diaryList={diaries} 
         onRemove={onRemove}
+        onEdit={onEdit}
       />
     </div>
   );
