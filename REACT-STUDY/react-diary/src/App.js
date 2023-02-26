@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import './App.css'
 import DiaryEditor from './DiaryEditor'
 import DiaryList from './DiaryList'
@@ -6,7 +6,6 @@ import DiaryList from './DiaryList'
 // import LifeCycle2 from './LifeCycle2';
 
 /* 임의의 일기 데이터 */
-// https://jsonplaceholder.typicode.com/comments
 // const dummyList = [
 //   {
 //     id : 1,
@@ -55,7 +54,6 @@ function App() {
     )
 
     setDiaries(initData)
-    console.info('initData : ', initData)
   }
   // App이 마운트 되는 경우, fetch 요청
   useEffect( () => {
@@ -106,12 +104,37 @@ function App() {
       )
     )
   }
+  /**
+   * 일기의 행복 점수를 분석하는 함수
+   * 기존에 선언했던 함수에 useMemo를 사용하게 되면,
+   * not a fuction 에러가 발생하게 된다.
+   * 왜냐하면 useMemo는 기존함수가 리턴 한 값을 받아
+   * 리턴하기 때문에 함수명()이 아닌 함수명 으로만 사용해야하며
+   * 두번째 인자로 선언한 값이 변경되지 않는 이상 항상 값을 기억하고 있다.
+   */
+  const getDiariesAnalysis = useMemo(() => {
+      console.info(`[일기 행복점수 분석을 시작합니다]`)
+
+      const happyCount = diaries.filter( diary => diary.happy >= 3).length
+      const unHappyCount = diaries.length - happyCount
+      const happyRatio = Number.parseInt((happyCount / diaries.length) * 100)
+      
+      return {happyCount, unHappyCount, happyRatio}
+    }, [diaries.length])
+
+  const {happyCount, unHappyCount, happyRatio} = getDiariesAnalysis
 
   return (
     <div className='App'>
       {/* <LifeCycle />
       <LifeCycle2 /> */}
       <DiaryEditor onSubmit={onSubmit} />
+      <div>
+        <h5>전체 일기 수 : {diaries.length} 개</h5>
+        <h5>행복했던 일기 수 : {happyCount} 개</h5>
+        <h5>서운했던 일기 수 : {unHappyCount} 개</h5>
+        <h5>행복한 일기의 비율 : {happyRatio}%</h5>
+      </div>
       <DiaryList 
         diaryList={diaries} 
         onRemove={onRemove}
