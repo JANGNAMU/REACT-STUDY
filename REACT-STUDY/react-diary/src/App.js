@@ -2,6 +2,8 @@ import { useRef, useState } from 'react';
 import './App.css'
 import DiaryEditor from './DiaryEditor'
 import DiaryList from './DiaryList'
+import LifeCycle from './LifeCycle';
+import LifeCycle2 from './LifeCycle2';
 
 /* 임의의 일기 데이터 */
 // const dummyList = [
@@ -82,6 +84,8 @@ function App() {
 
   return (
     <div className='App'>
+      <LifeCycle />
+      <LifeCycle2 />
       <DiaryEditor onSubmit={onSubmit} />
       <DiaryList 
         diaryList={diaries} 
