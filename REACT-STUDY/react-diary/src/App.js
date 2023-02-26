@@ -1,11 +1,12 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css'
 import DiaryEditor from './DiaryEditor'
 import DiaryList from './DiaryList'
-import LifeCycle from './LifeCycle';
-import LifeCycle2 from './LifeCycle2';
+// import LifeCycle from './LifeCycle';
+// import LifeCycle2 from './LifeCycle2';
 
 /* 임의의 일기 데이터 */
+// https://jsonplaceholder.typicode.com/comments
 // const dummyList = [
 //   {
 //     id : 1,
@@ -36,6 +37,30 @@ import LifeCycle2 from './LifeCycle2';
 function App() {
   // 하위 컴포넌트에서 주고 받을 수 있는 일기 state
   const [diaries, setDiaries] = useState([])
+  // api 통신을 통한 데이터 받아오기
+  const getDummy = async() => {
+    const res = 
+      await fetch('https://jsonplaceholder.typicode.com/comments')
+      .then( res => res.json())
+    
+    const initData = () => res.slice(0, 20).map( init => {
+        return ({
+          author : init.email,
+          content : init.body,
+          happy : Math.floor(Math.random() * 5)+1,
+          submitDate : new Date().getTime(),
+          id : diaryId.current++
+        })
+      }
+    )
+
+    setDiaries(initData)
+    console.info('initData : ', initData)
+  }
+  // App이 마운트 되는 경우, fetch 요청
+  useEffect( () => {
+    getDummy();
+  }, [])
 
   // 고유 id를 지정하기 위한 ref
   const diaryId = useRef(0)
@@ -84,8 +109,8 @@ function App() {
 
   return (
     <div className='App'>
-      <LifeCycle />
-      <LifeCycle2 />
+      {/* <LifeCycle />
+      <LifeCycle2 /> */}
       <DiaryEditor onSubmit={onSubmit} />
       <DiaryList 
         diaryList={diaries} 
