@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import './App.css'
 import DiaryEditor from './DiaryEditor'
 import DiaryList from './DiaryList'
+import OptimizeTest from './OptimizeTest'
 // import LifeCycle from './LifeCycle';
 // import LifeCycle2 from './LifeCycle2';
 
@@ -85,7 +86,6 @@ function App() {
      */
     const resetDiary = diaries.filter(item => item.id !== targetId)
     setDiaries([...resetDiary])
-    console.info(`${targetId+1} 번째 일기가 삭제되었습니다`)
   }
 
   // 일기를 수정하기 위한 함수
@@ -113,7 +113,7 @@ function App() {
    * 두번째 인자로 선언한 값이 변경되지 않는 이상 항상 값을 기억하고 있다.
    */
   const getDiariesAnalysis = useMemo(() => {
-      console.info(`[일기 행복점수 분석을 시작합니다]`)
+      // console.info(`[일기 행복점수 분석을 시작합니다]`)
 
       const happyCount = diaries.filter( diary => diary.happy >= 3).length
       const unHappyCount = diaries.length - happyCount
@@ -128,6 +128,7 @@ function App() {
     <div className='App'>
       {/* <LifeCycle />
       <LifeCycle2 /> */}
+      <OptimizeTest />
       <DiaryEditor onSubmit={onSubmit} />
       <div>
         <h5>전체 일기 수 : {diaries.length} 개</h5>
