@@ -74,22 +74,22 @@ function App() {
     diaryId.current += 1
     // prop으로 전달할 useState
     // useCallback을 활용할 경우 최초의 diaries를 참고하고 있어 onSubmit 실행 시 다시 초기화 된다.
-    setDiaries( (diaries) => [newDiary, ...diaries])
-
+    setDiaries( diaries => [newDiary, ...diaries])
   }, [])
 
   /* 일기를 삭제하기 위한 함수 */
-  const onRemove = (targetId) => {
+  const onRemove = useCallback((targetId) => {
     /**
      * 1) id를 받아와 diaries 안의 동일한 data를 찾는다
      * 2) 동일한 id를 가진 data를 지우고 나머지 data로 state를 재구성한다
      */
-    const resetDiary = diaries.filter(item => item.id !== targetId)
-    setDiaries([...resetDiary])
-  }
+    // useCallback은 메모이제이션 된 함수를 반환함
+    // 따라서 최신 diaries state를 인자로 받아 setState 할 수 있도록 해야함
+    setDiaries( diaries => diaries.filter(item => item.id !== targetId))
+  }, [])
 
   /* 일기를 수정하기 위한 함수 */
-  const onEdit = (targetId, editContent) => {
+  const onEdit = useCallback((targetId, editContent) => {
     /**
      * 왜 DiaryItem에 정의하지 않고 여기에 선언하는 지?
      * react의 특성 : 
@@ -98,12 +98,13 @@ function App() {
      * 데이터를 가지고 내려갈 수 있도록 부모에 선언
      */
     setDiaries( 
+      diaries => 
       diaries.map( diary => 
         diary.id === targetId ? 
           {...diary, content: editContent} : diary
       )
     )
-  }
+  }, [])
   /**
    * 일기의 행복 점수를 분석하는 함수
    * 기존에 선언했던 함수에 useMemo를 사용하게 되면,

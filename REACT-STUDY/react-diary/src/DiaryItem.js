@@ -1,7 +1,16 @@
-import { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 /* 다이어리 리스트 아이템 */
-const DiaryItem = ({ onRemove, onEdit, id, author, content, happy, submitDate }) =>{
+const DiaryItem = ({ 
+    onRemove, 
+    onEdit, 
+    id, 
+    author, 
+    content, 
+    happy, 
+    submitDate 
+}) =>{
+
     // 행복점수 정도에 따른 표현
     const happyPoint = ['🥲', '😐', '😌', '😊', '🥰']
     // 삭제하기 기능 정의
@@ -75,4 +84,4 @@ const DiaryItem = ({ onRemove, onEdit, id, author, content, happy, submitDate })
     )
 }
 
-export default DiaryItem
+export default React.memo(DiaryItem)
