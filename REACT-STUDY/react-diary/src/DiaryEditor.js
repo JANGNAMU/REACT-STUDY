@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 /** 
  * 다이어리 작성을 위한 컴포넌트 
  * @param   onSubmit    작성자, 내용, 행복점수를 입력받아 새로 등록하는 prop
@@ -88,4 +88,4 @@ const DiaryEditor = ({onSubmit}) =>{
     )
 }
 
-export default DiaryEditor;
+export default React.memo(DiaryEditor);

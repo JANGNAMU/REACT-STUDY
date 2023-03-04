@@ -1,11 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './App.css'
 import DiaryEditor from './DiaryEditor'
 import DiaryList from './DiaryList'
-import OptimizeTest from './OptimizeTest'
-// import LifeCycle from './LifeCycle';
-// import LifeCycle2 from './LifeCycle2';
-
 /* 임의의 일기 데이터 */
 // const dummyList = [
 //   {
@@ -63,8 +59,9 @@ function App() {
 
   // 고유 id를 지정하기 위한 ref
   const diaryId = useRef(0)
-  // 일기를 등록하기 위한 함수
-  const onSubmit = (author, content, happy) => {
+  /* 일기를 등록하기 위한 함수 */
+  // useMemo와 같이 메모이제이션 되어있는 콜백함수를 반환
+  const onSubmit = useCallback((author, content, happy) => {
     const submitDate = new Date().getTime()
     const newDiary = {
       author,
@@ -76,9 +73,12 @@ function App() {
     // 등록 완료 후, id 값을 해줄 ref
     diaryId.current += 1
     // prop으로 전달할 useState
-    setDiaries([newDiary, ...diaries])
-  }
-  // 일기를 삭제하기 위한 함수
+    // useCallback을 활용할 경우 최초의 diaries를 참고하고 있어 onSubmit 실행 시 다시 초기화 된다.
+    setDiaries( (diaries) => [newDiary, ...diaries])
+
+  }, [])
+
+  /* 일기를 삭제하기 위한 함수 */
   const onRemove = (targetId) => {
     /**
      * 1) id를 받아와 diaries 안의 동일한 data를 찾는다
@@ -88,7 +88,7 @@ function App() {
     setDiaries([...resetDiary])
   }
 
-  // 일기를 수정하기 위한 함수
+  /* 일기를 수정하기 위한 함수 */
   const onEdit = (targetId, editContent) => {
     /**
      * 왜 DiaryItem에 정의하지 않고 여기에 선언하는 지?
@@ -126,9 +126,6 @@ function App() {
 
   return (
     <div className='App'>
-      {/* <LifeCycle />
-      <LifeCycle2 /> */}
-      <OptimizeTest />
       <DiaryEditor onSubmit={onSubmit} />
       <div>
         <h5>전체 일기 수 : {diaries.length} 개</h5>
